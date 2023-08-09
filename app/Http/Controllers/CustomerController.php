@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\WelcomeMail;
 use Illuminate\Http\Request;
 
 use \App\Model\Customer;
+use Illuminate\Support\Facades\Mail;
 
 class CustomerController extends Controller
 {
@@ -49,6 +51,9 @@ class CustomerController extends Controller
         //  Way 3
         $customer = Customer::create($this->validateDataHelper());
 
+        //  SEND MAIL
+        Mail::to($customer->email)->send(new WelcomeMail());
+        
         return redirect(route('customers.show', $customer));
     }
 

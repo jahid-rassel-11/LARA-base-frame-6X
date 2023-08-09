@@ -17,6 +17,9 @@ Route::get('/', function () {
 
 //  "Customer" Controller [ Resource controller ]
 use \App\Http\Controllers\CustomerController;
+use App\Mail\WelcomeMail;
+use Illuminate\Support\Facades\Mail;
+
 Route::get('/customers', 'CustomerController@index')->name('customers');
 Route::get('/customers/create', 'CustomerController@create')->name('customers.create');
 Route::post('/customers', 'CustomerController@store')->name('customers.store');
@@ -24,6 +27,18 @@ Route::get('/customers/{customer}', 'CustomerController@show')->name('customers.
 Route::get('/customers/{customer}/edit', 'CustomerController@edit')->name('customers.edit');
 Route::put('/customers/{customer}', 'CustomerController@update')->name('customers.update');
 Route::DELETE('/customers/{customer}', 'CustomerController@destroy')->name('customers.destroy');
+
+
+///////////////////////////////////////////////////
+//                FOR MAIL                  /////// 
+Route::get('email/welcome', function () {
+    //Mail::to($request->user())->send(new WelcomeMail());
+    Mail::to("testing@testing.com")->send(new WelcomeMail());
+
+
+    return new WelcomeMail();
+});
+
 
 
 
